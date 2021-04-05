@@ -10,6 +10,7 @@ repoDir = '../informapedia.github.io'
 #repoDir = sys.argv[2]
 
 def git_push(filenameToAdd, commitMessage):
+    print("Starting to push file {}", filenameToAdd)
     try:
         repo = Repo(repoDir)
         repo.git.add(filenameToAdd)
@@ -52,7 +53,7 @@ elif platform == "win32":
 
 os.chdir(oldCurrentWorkingDir)
 
-canPushFile = input("Can be commit? [Y/N]")
+canPushFile = input("Can be commit? [Y/N]: ")
 canPushFile = canPushFile.lower()
 while canPushFile != 'y' and canPushFile != 'n':
     print("Wrong input {}, please answer with Y or N.".format(canPushFile))
@@ -62,8 +63,6 @@ while canPushFile != 'y' and canPushFile != 'n':
 
 if platform == "linux" or platform == "linux2" or platform == "darwin":
     os.system("ps aux | grep jekyll | awk \'{print $2}\' | xargs kill -9")
-elif platform == "win32":
-    pass
 
 if (canPushFile == 'y'):
     git_push(filenameToAdd, "Adicionando notícia em Boas Práticas {}".format(notionTitle))
