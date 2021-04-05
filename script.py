@@ -29,6 +29,11 @@ filenameToAdd = None
 for folder in os.scandir('notion2md_output'):
     notionTitle = folder.name
     for filename in os.scandir(folder):
+        if filename.name.endswith('.md'):
+            with open(filename, 'r') as f:
+                content = f.read().replace('\n[', '[')
+            with open(filename, 'w') as f:
+                f.write(content)
         filenameToAdd = os.path.join('_posts', filename.name)
         try:
             os.remove(os.path.join(repoDir, filenameToAdd))
@@ -62,3 +67,5 @@ elif platform == "win32":
 
 if (canPushFile == 'y'):
     git_push(filenameToAdd, "Adicionando notícia em Boas Práticas {}".format(notionTitle))
+else:
+    os.remove(os.path.join(repoDir, filenameToAdd))
