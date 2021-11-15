@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from git import Repo
 from notion2md import *
 import os
