@@ -6,6 +6,7 @@ certifi==2020.12.5
 chardet==4.0.0
 commonmark==0.9.1
 dictdiffer==0.8.1
+GitPython==3.1.26
 idna==2.10
 iniconfig==1.1.1
 notion @ git+https://github.com/jamalex/notion-py.git@refs/pull/294/merge
