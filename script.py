@@ -34,7 +34,7 @@ for folder in os.scandir('notion2md_output'):
     for filename in os.scandir(folder):
         if filename.name.endswith('.md'):
             with open(filename, 'r') as f:
-                content = f.read().replace('\n[', '[')
+                content = f.read().replace('\n[', '[').replace('permalink: /boasPraticas/:title:output_ext', 'permalink: /boasPraticas/:year/:month/:day/:title')
             with open(filename, 'w') as f:
                 f.write(content)
         filenameToAdd = os.path.join('_posts', filename.name)
@@ -43,6 +43,7 @@ for folder in os.scandir('notion2md_output'):
         except:
             pass
         shutil.move(filename, os.path.join(repoDir, '_posts'))
+    os.removedirs(folder)
 
 print("start test")
 oldCurrentWorkingDir = os.getcwd()
