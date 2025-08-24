@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from git import Repo
-from notion2md import *
+from notion2md.exporter.block import MarkdownExporter
 import os
 import shutil
 import subprocess
@@ -25,25 +25,25 @@ def git_push(filenameToAdd, commitMessage):
 notionUrl = sys.argv[1]
 tokenV2 = os.getenv('NOTION_TOKEN')
 
-export_cli(token_v2=tokenV2, url=notionUrl, bmode=1)
+filenameMd = 'notion2md_output'
+MarkdownExporter(block_url=notionUrl,output_path=filenameMd,download=True,unzipped=True).export()
 
 notionTitle = None
 filenameToAdd = None
-for folder in os.scandir('notion2md_output'):
-    notionTitle = folder.name
-    for filename in os.scandir(folder):
-        if filename.name.endswith('.md'):
-            with open(filename, 'r') as f:
-                content = f.read().replace('\n[', '[').replace('permalink: /boasPraticas/:title:output_ext', 'permalink: /boasPraticas/:year/:month/:day/:title')
-            with open(filename, 'w') as f:
-                f.write(content)
-        filenameToAdd = os.path.join('_posts', filename.name)
-        try:
-            os.remove(os.path.join(repoDir, filenameToAdd))
-        except:
-            pass
-        shutil.move(filename, os.path.join(repoDir, '_posts'))
-    os.removedirs(folder)
+for filename in os.scandir(filenameMd):
+    if filename.name.endswith('.md'):
+        with open(filename, 'r') as f:
+            content = f.read().replace('\n[', '[').replace('permalink: /boasPraticas/:title:output_ext', 'permalink: /boasPraticas/:year/:month/:day/:title')
+        with open(filename, 'w') as f:
+            f.write(content)
+    filenameToAdd = os.path.join('_posts', filename.name)
+    try:
+        os.remove(os.path.join(repoDir, filenameToAdd))
+    except:
+        pass
+    shutil.move(filename, os.path.join(repoDir, '_posts'))
+
+os.removedirs(filenameMd)
 
 print("start test")
 oldCurrentWorkingDir = os.getcwd()

@@ -2,14 +2,18 @@
 
 Repositório para exportar página de notion para Jekyll e subir para GithubPages.
 
-Para isso, é preciso primeiro setar a variável de ambiente NOTION_TOKEN. Para descobrir o seu tokenV2 do notion, é preciso abrir o DevTools do seu navegador na aba aberta do notion. Em Aplicação > Cookies > https://www.notion.so você encontrará na lista o token, coloque no seu ambiente o valor encontrado.
+Para isso, é preciso primeiro setar a variável de ambiente NOTION_TOKEN. Para maisn informações sobre como configurar esse token [Integration](https://www.notion.so/profile/integrations).
 
-Depois, é preciso setar o ambiente do python para execução. Recomendo usar o [virtualenv](https://virtualenv.pypa.io/en/latest/) para configurar o ambiente isolado.
+Depois, é preciso setar o ambiente do Python para execução. Recomendamos utilizar o [Poetry](https://python-poetry.org/) para gerenciar dependências e ambientes isolados.
 
-Para instalar os pacotes que o projeto depende, basta executar:
+Se ainda não tiver o Poetry instalado, faça:
 
-    pip install -r requirements.txt
+    curl -sSL https://install.python-poetry.org | python3 -
+
+Instale as dependências do projeto com:
+
+    poetry install
 
 Para executar, basta executar o seguinte comando:
 
-    python script.py <PAGE_URL>
+    poetry run python script.py <PAGE_URL>
